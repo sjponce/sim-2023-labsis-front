@@ -67,97 +67,173 @@
   <mat-drawer-content>
     <ng-container *ngIf="rows$ | async as rows">
       <table mat-table [dataSource]="rows" class="example-table">
+
+        <!-- META HEADER -->
+        <ng-container matColumnDef="nMeta" [sticky]="true">
+          <th mat-header-cell *matHeaderCellDef class="color0"></th>
+        </ng-container>
+        
+        <ng-container matColumnDef="relojMeta" [sticky]="true">
+          <th mat-header-cell *matHeaderCellDef class="color0"></th>
+        </ng-container>
+        
+        <ng-container matColumnDef="eventoMeta">
+          <th mat-header-cell *matHeaderCellDef class="color0"></th>
+        </ng-container>
+        
+        <ng-container matColumnDef="rndProxLlegadaMeta">
+          <th mat-header-cell *matHeaderCellDef class="color1">LLEGADA</th>
+        </ng-container>
+        
+        <ng-container matColumnDef="proxLlegadaMeta">
+          <th mat-header-cell *matHeaderCellDef class="color1"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="rndTipoTrabajoMeta">
+          <th mat-header-cell *matHeaderCellDef class="color2">TIPO TRABAJO</th>
+        </ng-container>
+        
+        <ng-container matColumnDef="tipoTrabajoMeta">
+          <th mat-header-cell *matHeaderCellDef class="color2"></th>
+        </ng-container>
+        
+        <ng-container matColumnDef="rndVariacionMeta">
+          <th mat-header-cell *matHeaderCellDef class="color2"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="variacionTiempoTrabajoMeta">
+          <th mat-header-cell *matHeaderCellDef class="color2"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="colaMeta">
+          <th mat-header-cell *matHeaderCellDef class="color0"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoT1Meta">
+          <th mat-header-cell *matHeaderCellDef class="color3">TECNICO 1</th>
+        </ng-container>
+
+        <ng-container matColumnDef="inicioTrabajoT1Meta">
+          <th mat-header-cell *matHeaderCellDef class="color3"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempoTrabajoT1Meta">
+          <th mat-header-cell *matHeaderCellDef class="color3"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="finTrabajoT1Meta">
+          <th mat-header-cell *matHeaderCellDef class="color3"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoT2Meta">
+          <th mat-header-cell *matHeaderCellDef class="color4">TECNICO 2</th>
+        </ng-container>
+
+        <ng-container matColumnDef="inicioTrabajoT2Meta">
+          <th mat-header-cell *matHeaderCellDef class="color4"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempoTrabajoT2Meta">
+          <th mat-header-cell *matHeaderCellDef class="color4"></th>
+        </ng-container>
+
+        <ng-container matColumnDef="finTrabajoT2Meta">
+          <th mat-header-cell *matHeaderCellDef class="color4"></th>
+        </ng-container>
+
+        <!-- HEADER - CONTENT -->
         <ng-container matColumnDef="n" [sticky]="true">
-          <th mat-header-cell *matHeaderCellDef>N</th>
+          <th mat-header-cell *matHeaderCellDef class="color0">N</th>
           <td mat-cell *matCellDef="let row">{{row.n}}</td>
         </ng-container>
         
         <ng-container matColumnDef="reloj" [sticky]="true">
-          <th mat-header-cell *matHeaderCellDef>Reloj</th>
+          <th mat-header-cell *matHeaderCellDef class="color0">Reloj</th>
           <td mat-cell *matCellDef="let row">{{row.reloj?.toFixed(2)}}</td>
         </ng-container>
         
         <ng-container matColumnDef="evento">
-          <th mat-header-cell *matHeaderCellDef>Evento</th>
+          <th mat-header-cell *matHeaderCellDef class="color0">Evento</th>
           <td mat-cell *matCellDef="let row">{{row.evento}}</td>
         </ng-container>
         
         <ng-container matColumnDef="rndProxLlegada">
-          <th mat-header-cell *matHeaderCellDef>Rnd prox llegada</th>
+          <th mat-header-cell *matHeaderCellDef class="color1">Rnd prox llegada</th>
           <td mat-cell *matCellDef="let row">{{row.rndProxLlegada?.toFixed(2)}}</td>
         </ng-container>
         
         <ng-container matColumnDef="proxLlegada">
-          <th mat-header-cell *matHeaderCellDef>proxLlegada</th>
+          <th mat-header-cell *matHeaderCellDef class="color1">proxLlegada</th>
           <td mat-cell *matCellDef="let row">{{row.proxLlegada?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="rndTipoTrabajo">
-          <th mat-header-cell *matHeaderCellDef>Rnd tipo trabajo</th>
+          <th mat-header-cell *matHeaderCellDef class="color2">Rnd tipo trabajo</th>
           <td mat-cell *matCellDef="let row">{{row.rndTipoTrabajo?.toFixed(2)}}</td>
         </ng-container>
         
         <ng-container matColumnDef="tipoTrabajo">
-          <th mat-header-cell *matHeaderCellDef>tipo trabajo</th>
+          <th mat-header-cell *matHeaderCellDef class="color2">tipo trabajo</th>
           <td mat-cell *matCellDef="let row">{{row.tipoTrabajo}}</td>
         </ng-container>
         
         <ng-container matColumnDef="rndVariacion">
-          <th mat-header-cell *matHeaderCellDef>Rnd variacion tiempo trabajo</th>
+          <th mat-header-cell *matHeaderCellDef class="color2">Rnd variacion tiempo trabajo</th>
           <td mat-cell *matCellDef="let row">{{row.rndVariacion?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="variacionTiempoTrabajo">
-          <th mat-header-cell *matHeaderCellDef>Variacion tiempo trabajo</th>
+          <th mat-header-cell *matHeaderCellDef class="color2">Variacion tiempo trabajo</th>
           <td mat-cell *matCellDef="let row">{{row.variacionTiempoTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="cola">
-          <th mat-header-cell *matHeaderCellDef>Cola</th>
+          <th mat-header-cell *matHeaderCellDef class="color0">Cola</th>
           <td mat-cell *matCellDef="let row">{{row.colaLlegada?.length}}</td>
         </ng-container>
 
         <ng-container matColumnDef="estadoT1">
-          <th mat-header-cell *matHeaderCellDef>Estado tecnico 1</th>
+          <th mat-header-cell *matHeaderCellDef class="color3">Estado tecnico 1</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico1?.estado}}</td>
         </ng-container>
 
         <ng-container matColumnDef="inicioTrabajoT1">
-          <th mat-header-cell *matHeaderCellDef>Inicio trabajo Tecnico 1</th>
+          <th mat-header-cell *matHeaderCellDef class="color3">Inicio trabajo Tecnico 1</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico1?.inicioTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="tiempoTrabajoT1">
-          <th mat-header-cell *matHeaderCellDef>Tiempo trabajo Tecnico 1</th>
+          <th mat-header-cell *matHeaderCellDef class="color3">Tiempo trabajo Tecnico 1</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico1?.tiempoTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="finTrabajoT1">
-          <th mat-header-cell *matHeaderCellDef>Fin trabajo Tecnico 1</th>
+          <th mat-header-cell *matHeaderCellDef class="color3">Fin trabajo Tecnico 1</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico1?.finTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="estadoT2">
-          <th mat-header-cell *matHeaderCellDef>Estado tecnico 2</th>
+          <th mat-header-cell *matHeaderCellDef class="color4">Estado tecnico 2</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico2?.estado}}</td>
         </ng-container>
 
         <ng-container matColumnDef="inicioTrabajoT2">
-          <th mat-header-cell *matHeaderCellDef>Inicio trabajo Tecnico 2</th>
+          <th mat-header-cell *matHeaderCellDef class="color4">Inicio trabajo Tecnico 2</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico2?.inicioTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="tiempoTrabajoT2">
-          <th mat-header-cell *matHeaderCellDef>Tiempo trabajo Tecnico 2</th>
+          <th mat-header-cell *matHeaderCellDef class="color4">Tiempo trabajo Tecnico 2</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico2?.tiempoTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
         <ng-container matColumnDef="finTrabajoT2">
-          <th mat-header-cell *matHeaderCellDef>Fin trabajo Tecnico 2</th>
+          <th mat-header-cell *matHeaderCellDef class="color4">Fin trabajo Tecnico 2</th>
           <td mat-cell *matCellDef="let row">{{row.tecnico2?.finTrabajo?.toFixed(2)}}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="metaDisplayedColumns; sticky: true"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <mat-paginator *ngIf="paginator$ | async as paginator" (page)="handlePageEvent($event)" [length]="totalCount" [pageSize]="paginator.limit" [pageSizeOptions]="[10,25,50,100]"></mat-paginator>

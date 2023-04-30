@@ -24,3 +24,35 @@ th {
 td {
     padding: 5px !important;
 }
+
+.color0 {
+    background-color: grey;
+    color: white;
+}
+
+.color1 {
+    background-color: rgb(20, 101, 155);
+    color: white;
+}
+
+.color2 {
+    background-color: rgb(98, 0, 128);
+    color: white;
+}
+
+
+.color3 {
+    background-color: rgb(128, 94, 0);
+    color: white;
+}
+
+
+.color4 {
+    background-color: green;
+    color: white;
+}
+
+.color5 {
+    background-color: rgb(128, 6, 0);
+    color: white;
+}

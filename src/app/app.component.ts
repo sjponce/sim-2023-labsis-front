@@ -26,6 +26,7 @@ export class AppComponent {
   ) {}
 
   protected totalCount = 0;
+  protected metaDisplayedColumns = ['nMeta', 'relojMeta', 'eventoMeta', 'rndProxLlegadaMeta', 'proxLlegadaMeta', 'rndTipoTrabajoMeta', 'tipoTrabajoMeta', 'rndVariacionMeta', 'variacionTiempoTrabajoMeta', 'colaMeta', 'estadoT1Meta', 'inicioTrabajoT1Meta', 'tiempoTrabajoT1Meta', 'finTrabajoT1Meta', 'estadoT2Meta', 'inicioTrabajoT2Meta', 'tiempoTrabajoT2Meta', 'finTrabajoT2Meta'];
   protected displayedColumns = ['n', 'reloj', 'evento', 'rndProxLlegada', 'proxLlegada', 'rndTipoTrabajo', 'tipoTrabajo', 'rndVariacion', 'variacionTiempoTrabajo', 'cola', 'estadoT1', 'inicioTrabajoT1', 'tiempoTrabajoT1', 'finTrabajoT1', 'estadoT2', 'inicioTrabajoT2', 'tiempoTrabajoT2', 'finTrabajoT2'];
 
   protected configForm = this.fb.group({
