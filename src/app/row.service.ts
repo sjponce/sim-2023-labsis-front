@@ -17,10 +17,10 @@ export class RowService {
     })
   }
 
-  public generate(n = 100) {
+  public generate(data: any) {
     return this.http.get('http://localhost:3000/api/generate', {
       params: {
-        n
+        ...data
       },
     })
   }

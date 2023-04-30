@@ -6,19 +6,56 @@
         <h2>Config</h2>
         <mat-form-field appearance="fill">
           <mat-label>N</mat-label>
-          <input matInput formControlName="count">
+          <input type="number" matInput formControlName="n">
+        </mat-form-field>
+        <!-- n, cotaInfLlegada, cotaSupLlegada, probA, probB, probC, probD, probE, tiempoTrabajoA, tiempoTrabajoB, tiempoTrabajoC, tiempoTrabajoD, tiempoTrabajoE -->
+        <mat-form-field appearance="fill">
+          <mat-label>Cota inferior llegada</mat-label>
+          <input type="number" matInput formControlName="cotaInfLlegada">
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>B</mat-label>
-          <input matInput>
+          <mat-label>Cota superior llegada</mat-label>
+          <input type="number" matInput formControlName="cotaSupLlegada">
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>C</mat-label>
-          <input matInput>
+          <mat-label>Probabilidad cambio de placa</mat-label>
+          <input type="number" matInput formControlName="probA">
         </mat-form-field>
-      </form>
+        <mat-form-field appearance="fill">
+          <mat-label>Probabilidad ampliacion de memoria</mat-label>
+          <input type="number" matInput formControlName="probB">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Probabilidad formateo de disco</mat-label>
+          <input type="number" matInput formControlName="probC">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Probabilidad agregar CD o DVD</mat-label>
+          <input type="number" matInput formControlName="probD">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Probabilidad cambio de memoria</mat-label>
+          <input type="number" matInput formControlName="probE">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Cota inferior variacion trabajo</mat-label>
+          <input type="number" matInput formControlName="cotaInfVariacionTrabajo">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Cota superior variacion trabajo</mat-label>
+          <input type="number" matInput formControlName="cotaSupVariacionTrabajo">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo trabajo inicial C</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoInicialC">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo trabajo final C</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoFinalC">
+        </mat-form-field>
+        </form>
       
-      <button type="button" color="primary" mat-raised-button (click)="generate()">
+      <button type="button" color="primary" mat-raised-button (click)="generate()" [disabled]="configForm.invalid">
         Generate
       </button>
       <button type="button" color="primary" mat-raised-button (click)="populate()">
@@ -30,18 +67,96 @@
   <mat-drawer-content>
     <ng-container *ngIf="rows$ | async as rows">
       <table mat-table [dataSource]="rows" class="example-table">
-        <!-- Number Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let row">{{row.name}}</td>
+        <ng-container matColumnDef="n" [sticky]="true">
+          <th mat-header-cell *matHeaderCellDef>N</th>
+          <td mat-cell *matCellDef="let row">{{row.n}}</td>
         </ng-container>
         
-        <!-- Title Column -->
-        <ng-container matColumnDef="i">
-          <th mat-header-cell *matHeaderCellDef>I</th>
-          <td mat-cell *matCellDef="let row">{{row.i}}</td>
+        <ng-container matColumnDef="reloj" [sticky]="true">
+          <th mat-header-cell *matHeaderCellDef>Reloj</th>
+          <td mat-cell *matCellDef="let row">{{row.reloj?.toFixed(2)}}</td>
         </ng-container>
         
+        <ng-container matColumnDef="evento">
+          <th mat-header-cell *matHeaderCellDef>Evento</th>
+          <td mat-cell *matCellDef="let row">{{row.evento}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="rndProxLlegada">
+          <th mat-header-cell *matHeaderCellDef>Rnd prox llegada</th>
+          <td mat-cell *matCellDef="let row">{{row.rndProxLlegada?.toFixed(2)}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="proxLlegada">
+          <th mat-header-cell *matHeaderCellDef>proxLlegada</th>
+          <td mat-cell *matCellDef="let row">{{row.proxLlegada?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rndTipoTrabajo">
+          <th mat-header-cell *matHeaderCellDef>Rnd tipo trabajo</th>
+          <td mat-cell *matCellDef="let row">{{row.rndTipoTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="tipoTrabajo">
+          <th mat-header-cell *matHeaderCellDef>tipo trabajo</th>
+          <td mat-cell *matCellDef="let row">{{row.tipoTrabajo}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="rndVariacion">
+          <th mat-header-cell *matHeaderCellDef>Rnd variacion tiempo trabajo</th>
+          <td mat-cell *matCellDef="let row">{{row.rndVariacion?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="variacionTiempoTrabajo">
+          <th mat-header-cell *matHeaderCellDef>Variacion tiempo trabajo</th>
+          <td mat-cell *matCellDef="let row">{{row.variacionTiempoTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cola">
+          <th mat-header-cell *matHeaderCellDef>Cola</th>
+          <td mat-cell *matCellDef="let row">{{row.colaLlegada?.length}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoT1">
+          <th mat-header-cell *matHeaderCellDef>Estado tecnico 1</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico1?.estado}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="inicioTrabajoT1">
+          <th mat-header-cell *matHeaderCellDef>Inicio trabajo Tecnico 1</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico1?.inicioTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempoTrabajoT1">
+          <th mat-header-cell *matHeaderCellDef>Tiempo trabajo Tecnico 1</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico1?.tiempoTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="finTrabajoT1">
+          <th mat-header-cell *matHeaderCellDef>Fin trabajo Tecnico 1</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico1?.finTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estadoT2">
+          <th mat-header-cell *matHeaderCellDef>Estado tecnico 2</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico2?.estado}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="inicioTrabajoT2">
+          <th mat-header-cell *matHeaderCellDef>Inicio trabajo Tecnico 2</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico2?.inicioTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempoTrabajoT2">
+          <th mat-header-cell *matHeaderCellDef>Tiempo trabajo Tecnico 2</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico2?.tiempoTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="finTrabajoT2">
+          <th mat-header-cell *matHeaderCellDef>Fin trabajo Tecnico 2</th>
+          <td mat-cell *matCellDef="let row">{{row.tecnico2?.finTrabajo?.toFixed(2)}}</td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
