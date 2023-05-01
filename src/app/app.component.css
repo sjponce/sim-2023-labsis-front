@@ -56,3 +56,12 @@ td {
     background-color: rgb(128, 6, 0);
     color: white;
 }
+
+.drawer-content {
+    display: flex;
+}
+
+.table-wrapper {
+    display: flex;
+    flex-direction: column;
+}
