@@ -104,7 +104,7 @@ export class AppComponent {
     startWith([])
   );
 
-  protected readonly jobHeaders$ = this.rows$.pipe(
+  protected readonly bounds$ = this.rows$.pipe(
     map((rows) => {
       let min = Infinity;
       let max = 0;
@@ -115,11 +115,31 @@ export class AppComponent {
         })
       );
       return [min, max];
-    }),
+    })
+  );
+
+  protected readonly jobHeaders$ = this.bounds$.pipe(
     map(([min, max]) => {
       const res: string[] = [];
       for (let i = min; i < max; i++) {
-        res.push(`T${i}`);
+        res.push(`T${i}Estado`);
+        res.push(`T${i}Llegada`);
+        res.push(`T${i}InicioTrabajo`);
+        res.push(`T${i}FinTrabajo`);
+      }
+      return res;
+    }),
+    startWith([])
+  );
+
+  protected readonly jobMetaHeaders$ = this.bounds$.pipe(
+    map(([min, max]) => {
+      const res: string[] = [];
+      for (let i = min; i < max; i++) {
+        res.push(`T${i}EstadoMeta`);
+        res.push(`T${i}LlegadaMeta`);
+        res.push(`T${i}InicioTrabajoMeta`);
+        res.push(`T${i}FinTrabajoMeta`);
       }
       return res;
     }),
@@ -127,28 +147,11 @@ export class AppComponent {
   );
 
   protected readonly displayedColumns$ = this.jobHeaders$.pipe(
-    map(headers => [...this.displayedColumns, ...headers])
-  )
+    map((headers) => [...this.displayedColumns, ...headers])
+  );
 
-  protected readonly jobs$ = this.rows$.pipe(
-    map((rows) => {
-      const res: any = [];
-      rows.forEach((row: any, i: number) => {
-        res.push({});
-
-        row.trabajos.forEach((trabajo: any) => {
-          res[i][`T${i}`] = trabajo;
-        });
-      });
-      console.log('asdads,', res);
-      /* 
-        rows.forEach((row: any) => {
-          row.trabajos.forEach((trabajo: any) => {
-          });
-        });  */
-
-      return res;
-    })
+  protected readonly metaDisplayedColumns$ = this.jobMetaHeaders$.pipe(
+    map((headers) => [...this.metaDisplayedColumns, ...headers])
   );
 
   public generate() {
@@ -167,5 +170,25 @@ export class AppComponent {
       limit: event.pageSize,
       skip: event.pageSize * event.pageIndex,
     });
+  }
+
+  public getHeader(header: string) {
+    if (header.includes('Estado')) {
+      return 'Estado'; 
+    } else if(header.includes('Llegada')) {
+      return 'Llegada'
+    } else if(header.includes('InicioTrabajo')) {
+      return 'Inicio trabajo'
+    } else {
+      return 'Fin trabajo'
+    }
+  }
+
+  public getMetaHeader(header: string, index: number) {
+    if (header.includes('EstadoMeta')) {
+      return `TRABAJO ${(index / 4) + 1}`; 
+    } else {
+      return ''
+    }
   }
 }
