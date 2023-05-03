@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {
   BehaviorSubject,
   combineLatest,
+  debounceTime,
+  distinctUntilChanged,
   map,
   shareReplay,
   startWith,
@@ -69,7 +71,7 @@ export class AppComponent {
   ];
 
   protected configForm = this.fb.group({
-    n: [1000, [Validators.required, Validators.min(0)]],
+    n: [1000, [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]],
     cotaInfLlegada: [30, [Validators.required, Validators.min(0)]],
     cotaSupLlegada: [90, [Validators.required, Validators.min(0)]],
     probA: [0.3, [Validators.required, Validators.min(0), Validators.max(1)]],
@@ -86,6 +88,7 @@ export class AppComponent {
     cotaSupVariacionTrabajo: [5, [Validators.required]],
     tiempoTrabajoInicialC: [25, [Validators.required, Validators.min(0)]],
     tiempoTrabajoFinalC: [10, [Validators.required, Validators.min(0)]],
+    tamanoCola: [3, [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]]
   });
 
   protected pageNumber = 0;
@@ -103,6 +106,7 @@ export class AppComponent {
       this.rowService.getAll(paginator.limit, paginator.skip)
     ),
     tap(() => (this.totalCount = this.configForm.controls.n.value ?? 0)),
+    shareReplay({ bufferSize: 1, refCount: true }),
     startWith([])
   );
 
@@ -110,13 +114,14 @@ export class AppComponent {
     map((rows) => {
       let min = Infinity;
       let max = 0;
+      
       rows.forEach((row: any) => {
         if (row.trabajos) {
           Object.keys(row.trabajos).forEach((trabajo: any) => {
             min =
-              row.trabajos[trabajo].id < min ? row.trabajos[trabajo].id : min;
+            row.trabajos[trabajo].id < min ? row.trabajos[trabajo].id : min;
             max =
-              row.trabajos[trabajo].id > max ? row.trabajos[trabajo].id : max;
+            row.trabajos[trabajo].id > max ? row.trabajos[trabajo].id : max;
           });
         };
       });
@@ -179,7 +184,7 @@ export class AppComponent {
       skip: event.pageSize * event.pageIndex,
     });
   }
-  
+
   goToPage() {
     const value = this.paginator$.value;
     this.paginator$.next({

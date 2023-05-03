@@ -17,24 +17,44 @@
           <input type="number" matInput formControlName="cotaSupLlegada" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad cambio de placa</mat-label>
+          <mat-label>Probabilidad A</mat-label>
           <input type="number" matInput formControlName="probA" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad ampliacion de memoria</mat-label>
+          <mat-label>Probabilidad B</mat-label>
           <input type="number" matInput formControlName="probB" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad formateo de disco</mat-label>
+          <mat-label>Probabilidad C</mat-label>
           <input type="number" matInput formControlName="probC" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad agregar CD o DVD</mat-label>
+          <mat-label>Probabilidad D</mat-label>
           <input type="number" matInput formControlName="probD" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad cambio de memoria</mat-label>
+          <mat-label>Probabilidad E</mat-label>
           <input type="number" matInput formControlName="probE" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo de trabajo A</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoA" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo de trabajo B</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoA" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo de trabajo C</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoA" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo de trabajo D</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoA" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tiempo de trabajo E</mat-label>
+          <input type="number" matInput formControlName="tiempoTrabajoA" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Cota inferior variacion trabajo</mat-label>
@@ -64,8 +84,11 @@
           <mat-label>Tiempo trabajo final C</mat-label>
           <input type="number" matInput formControlName="tiempoTrabajoFinalC" />
         </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tamano maximo de cola</mat-label>
+          <input type="number" matInput formControlName="tamanoCola" />
+        </mat-form-field>
       </form>
-
       <button
         type="button"
         color="primary"
@@ -79,6 +102,7 @@
         type="button"
         color="primary"
         mat-raised-button
+        [disabled]="configForm.invalid"
         (click)="populate()"
       >
         Populate
