@@ -4,6 +4,7 @@ import {
   BehaviorSubject,
   combineLatest,
   map,
+  shareReplay,
   startWith,
   switchMap,
   tap,
@@ -87,8 +88,10 @@ export class AppComponent {
     tiempoTrabajoFinalC: [10, [Validators.required, Validators.min(0)]],
   });
 
+  protected pageNumber = 0;
+
   protected paginator$ = new BehaviorSubject<Paginator>({
-    limit: 10,
+    limit: 50,
     skip: 0,
   });
   protected readonly reload$ = new BehaviorSubject<null>(null);
@@ -100,7 +103,6 @@ export class AppComponent {
       this.rowService.getAll(paginator.limit, paginator.skip)
     ),
     tap(() => (this.totalCount = this.configForm.controls.n.value ?? 0)),
-    tap(console.log),
     startWith([])
   );
 
@@ -108,14 +110,20 @@ export class AppComponent {
     map((rows) => {
       let min = Infinity;
       let max = 0;
-      rows.forEach((row: any) =>
-        row.trabajos.forEach((trabajo: any) => {
-          min = trabajo.id < min ? trabajo.id : min;
-          max = trabajo.id > max ? trabajo.id : max;
-        })
-      );
+      rows.forEach((row: any) => {
+        if (row.trabajos) {
+          Object.keys(row.trabajos).forEach((trabajo: any) => {
+            min =
+              row.trabajos[trabajo].id < min ? row.trabajos[trabajo].id : min;
+            max =
+              row.trabajos[trabajo].id > max ? row.trabajos[trabajo].id : max;
+          });
+        };
+      });
+
       return [min, max];
-    })
+    }),
+    shareReplay({bufferSize: 1, refCount: true}),
   );
 
   protected readonly jobHeaders$ = this.bounds$.pipe(
@@ -160,7 +168,7 @@ export class AppComponent {
 
   public populate() {
     this.paginator$.next({
-      limit: 10,
+      limit: 50,
       skip: 0,
     });
   }
@@ -171,24 +179,48 @@ export class AppComponent {
       skip: event.pageSize * event.pageIndex,
     });
   }
+  
+  goToPage() {
+    const value = this.paginator$.value;
+    this.paginator$.next({
+      limit: value.limit,
+      skip: value.limit * this.pageNumber
+    })
+  }
 
   public getHeader(header: string) {
     if (header.includes('Estado')) {
-      return 'Estado'; 
-    } else if(header.includes('Llegada')) {
-      return 'Llegada'
-    } else if(header.includes('InicioTrabajo')) {
-      return 'Inicio trabajo'
+      return 'Estado';
+    } else if (header.includes('Llegada')) {
+      return 'Llegada';
+    } else if (header.includes('InicioTrabajo')) {
+      return 'Inicio trabajo';
     } else {
-      return 'Fin trabajo'
+      return 'Fin trabajo';
     }
   }
 
   public getMetaHeader(header: string, index: number) {
     if (header.includes('EstadoMeta')) {
-      return `TRABAJO ${(index / 4) + 1}`; 
+      return `TRABAJO ${header.match(/\d+/)?.shift()}`;
     } else {
-      return ''
+      return '';
+    }
+  }
+
+  public getRowValue(header: string, row: any) {
+    let index = `T${header.match(/\d+/)?.shift()}`;
+    if( !row?.trabajos || !row.trabajos[index]) return '';
+
+    if (header.includes('Estado')) {
+      return row.trabajos[index].estado;
+    } else if (header.includes('Llegada')) {
+      
+      return row.trabajos[index].llegada?.toFixed(4);
+    } else if (header.includes('InicioTrabajo')) {
+      return row.trabajos[index].inicioTrabajo?.toFixed(4);
+    } else {
+      return row.trabajos[index].finTrabajo?.toFixed(4);
     }
   }
 }

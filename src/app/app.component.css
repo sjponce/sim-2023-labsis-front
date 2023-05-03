@@ -65,3 +65,8 @@ td {
     display: flex;
     flex-direction: column;
 }
+
+.search-config-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
