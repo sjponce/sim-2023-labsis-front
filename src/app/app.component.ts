@@ -47,6 +47,9 @@ export class AppComponent {
     'tiempoTrabajoT2Meta',
     'finTrabajoT2Meta',
     'promedioPermanenciaEquiposMeta',
+    'porcentajeEquiposDerivadosMeta',
+    'porcentajeDesocupacionT1Meta',
+    'porcentajeDesocupacionT1Meta',
   ];
   protected displayedColumns = [
     'n',
@@ -68,7 +71,10 @@ export class AppComponent {
     'inicioTrabajoT2',
     'tiempoTrabajoT2',
     'finTrabajoT2',
-    'promedioPermanenciaEquipos'
+    'promedioPermanenciaEquipos',
+    'porcentajeEquiposDerivados',
+    'porcentajeDesocupacionT1',
+    'porcentajeDesocupacionT2',
   ];
 
   protected configForm = this.fb.group({
@@ -103,7 +109,7 @@ export class AppComponent {
   protected stats: any;
 
   protected paginator$ = new BehaviorSubject<Paginator>({
-    limit: 400,
+    limit: 500000,
     skip: 0,
   });
   protected readonly reload$ = new BehaviorSubject<null>(null);
@@ -132,8 +138,7 @@ export class AppComponent {
           });
         }
       });
-      
-      console.log(max);
+      max = max > 100 ? 100 : max; 
       return [min, max];
     }),
     shareReplay({ bufferSize: 1, refCount: true })

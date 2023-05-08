@@ -202,6 +202,18 @@
             <th mat-header-cell *matHeaderCellDef class="color0">ESTADISTICAS</th>
           </ng-container>
 
+          <ng-container matColumnDef="porcentajeEquiposDerivadosMeta">
+            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+          </ng-container>
+
+          <ng-container matColumnDef="porcentajeDesocupacionT1Meta">
+            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+          </ng-container>
+
+          <ng-container matColumnDef="porcentajeDesocupacionT2Meta">
+            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+          </ng-container>
+          
           <!-- HEADER - CONTENT -->
           <ng-container matColumnDef="n" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0">N</th>
@@ -356,6 +368,33 @@
             </th>
             <td mat-cell *matCellDef="let row">
               {{ row.promedioPermanenciaEquipos?.toFixed(4) ?? '' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="porcentajeEquiposDerivados">
+            <th mat-header-cell *matHeaderCellDef class="color0">
+              Porcentaje equipos derivados
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.porcentajeEquiposDerivados?.toFixed(4) ?? '' }}%
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="porcentajeDesocupacionT1">
+            <th mat-header-cell *matHeaderCellDef class="color0">
+              Porcentaje desocupacion T1
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.porcentajeDesocupacionT1?.toFixed(4) ?? '' }}%
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="porcentajeDesocupacionT2">
+            <th mat-header-cell *matHeaderCellDef class="color0">
+              Porcentaje desocupacion T2
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.porcentajeDesocupacionT2?.toFixed(4) ?? '' }}%
             </td>
           </ng-container>
 
