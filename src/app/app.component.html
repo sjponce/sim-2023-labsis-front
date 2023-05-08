@@ -5,8 +5,8 @@
       <form [formGroup]="configForm">
         <h2>Config</h2>
         <mat-form-field appearance="fill">
-          <mat-label>N</mat-label>
-          <input type="number" matInput formControlName="n" />
+          <mat-label>Tiempo cierre</mat-label>
+          <input type="number" matInput formControlName="tiempoCierre" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Cota inferior llegada</mat-label>
@@ -42,19 +42,19 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Tiempo de trabajo B</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoA" />
+          <input type="number" matInput formControlName="tiempoTrabajoB" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Tiempo de trabajo C</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoA" />
+          <input type="number" matInput formControlName="tiempoTrabajoC" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Tiempo de trabajo D</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoA" />
+          <input type="number" matInput formControlName="tiempoTrabajoD" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Tiempo de trabajo E</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoA" />
+          <input type="number" matInput formControlName="tiempoTrabajoE" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Cota inferior variacion trabajo</mat-label>
@@ -102,11 +102,16 @@
         type="button"
         color="primary"
         mat-raised-button
-        [disabled]="configForm.invalid"
+        [disabled]="isLoading$ | async"
         (click)="populate()"
       >
         Populate
       </button>
+    </div>
+
+    <div *ngIf="stats">
+      <p>Promedio de permanencia: {{stats.promedioPermanenciaEquipos}}</p>
+
     </div>
   </mat-drawer>
   <!-- Table -->
@@ -193,6 +198,10 @@
             <th mat-header-cell *matHeaderCellDef class="color4"></th>
           </ng-container>
 
+          <ng-container matColumnDef="promedioPermanenciaEquiposMeta">
+            <th mat-header-cell *matHeaderCellDef class="color0">ESTADISTICAS</th>
+          </ng-container>
+
           <!-- HEADER - CONTENT -->
           <ng-container matColumnDef="n" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0">N</th>
@@ -229,7 +238,7 @@
 
           <ng-container matColumnDef="proxLlegada">
             <th mat-header-cell *matHeaderCellDef class="color1">
-              proxLlegada
+              Proxima llegada
             </th>
             <td mat-cell *matCellDef="let row">
               {{ row.proxLlegada?.toFixed(4) }}
@@ -341,6 +350,15 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="promedioPermanenciaEquipos">
+            <th mat-header-cell *matHeaderCellDef class="color0">
+              Promedio permanencia de equipos
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.promedioPermanenciaEquipos?.toFixed(4) ?? '' }}
+            </td>
+          </ng-container>
+
           <ng-container *ngFor="let header of jobHeaders$ | async">
             <ng-container matColumnDef="{{ header }}">
               <th mat-header-cell *matHeaderCellDef class="color5">
@@ -357,7 +375,7 @@
           >
             <ng-container matColumnDef="{{ header }}">
               <th mat-header-cell *matHeaderCellDef class="color5">
-                {{ getMetaHeader(header, i) }}
+                {{ getMetaHeader(header) }}
               </th>
             </ng-container>
           </ng-container>
@@ -375,21 +393,21 @@
             *matRowDef="let row; columns: displayedColumns$ | async"
           ></tr>
         </table>
-        <mat-paginator
+        <!-- <mat-paginator
           *ngIf="paginator$ | async as paginator"
           (page)="handlePageEvent($event)"
           [length]="totalCount"
           [pageSize]="paginator.limit"
           [pageSizeOptions]="[50, 100, 200]"
-        ></mat-paginator>
+        ></mat-paginator> -->
         
       </ng-container>
-      <div class="search-config-wrapper">
+      <!-- <div class="search-config-wrapper">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Enter page number" [(ngModel)]="pageNumber">
         </mat-form-field>
         <button mat-stroked-button color="primary" (click)="goToPage()">Go to Page</button>
-      </div>
+      </div> -->
     </div>
     </mat-drawer-content>
 </mat-drawer-container>
