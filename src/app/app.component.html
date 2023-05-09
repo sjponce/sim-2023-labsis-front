@@ -108,11 +108,6 @@
         Populate
       </button>
     </div>
-
-    <div *ngIf="stats">
-      <p>Promedio de permanencia: {{stats.promedioPermanenciaEquipos}}</p>
-
-    </div>
   </mat-drawer>
   <!-- Table -->
   <mat-drawer-content class="drawer-content">
@@ -129,6 +124,10 @@
           </ng-container>
 
           <ng-container matColumnDef="eventoMeta" [sticky]="true">
+            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+          </ng-container>
+
+          <ng-container matColumnDef="trabajoActualMeta" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
 
@@ -199,21 +198,23 @@
           </ng-container>
 
           <ng-container matColumnDef="promedioPermanenciaEquiposMeta">
-            <th mat-header-cell *matHeaderCellDef class="color0">ESTADISTICAS</th>
+            <th mat-header-cell *matHeaderCellDef class="color6">
+              ESTADISTICAS
+            </th>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeEquiposDerivadosMeta">
-            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+            <th mat-header-cell *matHeaderCellDef class="color6"></th>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeDesocupacionT1Meta">
-            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+            <th mat-header-cell *matHeaderCellDef class="color6"></th>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeDesocupacionT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color0"></th>
+            <th mat-header-cell *matHeaderCellDef class="color6"></th>
           </ng-container>
-          
+
           <!-- HEADER - CONTENT -->
           <ng-container matColumnDef="n" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0">N</th>
@@ -223,6 +224,13 @@
           <ng-container matColumnDef="reloj" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0">Reloj</th>
             <td mat-cell *matCellDef="let row">{{ row.reloj?.toFixed(4) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="trabajoActual" [sticky]="true">
+            <th mat-header-cell *matHeaderCellDef class="color0">
+              Trabajo actual
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.trabajoActual }}</td>
           </ng-container>
 
           <ng-container matColumnDef="evento" [sticky]="true">
@@ -278,7 +286,7 @@
               Rnd variacion tiempo trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.rndVariacion?.toFixed(4)  }}
+              {{ row.rndVariacion?.toFixed(4) }}
             </td>
           </ng-container>
 
@@ -287,7 +295,7 @@
               Variacion tiempo trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.variacionTiempoTrabajo?.toFixed(4) ?? '' }}
+              {{ row.variacionTiempoTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -308,7 +316,7 @@
               Inicio trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.inicioTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico1?.inicioTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -317,7 +325,7 @@
               Tiempo trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.tiempoTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico1?.tiempoTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -326,7 +334,7 @@
               Fin trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.finTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico1?.finTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -340,7 +348,7 @@
               Inicio trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.inicioTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico2?.inicioTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -349,7 +357,7 @@
               Tiempo trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.tiempoTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico2?.tiempoTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
@@ -358,52 +366,52 @@
               Fin trabajo
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.finTrabajo?.toFixed(4) ?? '' }}
+              {{ row.tecnico2?.finTrabajo?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="promedioPermanenciaEquipos">
-            <th mat-header-cell *matHeaderCellDef class="color0">
+            <th mat-header-cell *matHeaderCellDef class="color6">
               Promedio permanencia de equipos
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.promedioPermanenciaEquipos?.toFixed(4) ?? '' }}
+              {{ row.promedioPermanenciaEquipos?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeEquiposDerivados">
-            <th mat-header-cell *matHeaderCellDef class="color0">
+            <th mat-header-cell *matHeaderCellDef class="color6">
               Porcentaje equipos derivados
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeEquiposDerivados?.toFixed(4) ?? '' }}%
+              {{ row.porcentajeEquiposDerivados?.toFixed(4) ?? "" }}%
             </td>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeDesocupacionT1">
-            <th mat-header-cell *matHeaderCellDef class="color0">
+            <th mat-header-cell *matHeaderCellDef class="color6">
               Porcentaje desocupacion T1
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeDesocupacionT1?.toFixed(4) ?? '' }}%
+              {{ row.porcentajeDesocupacionT1?.toFixed(4) ?? "" }}%
             </td>
           </ng-container>
 
           <ng-container matColumnDef="porcentajeDesocupacionT2">
-            <th mat-header-cell *matHeaderCellDef class="color0">
+            <th mat-header-cell *matHeaderCellDef class="color6">
               Porcentaje desocupacion T2
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeDesocupacionT2?.toFixed(4) ?? '' }}%
+              {{ row.porcentajeDesocupacionT2?.toFixed(4) ?? "" }}%
             </td>
           </ng-container>
 
-          <ng-container *ngFor="let header of jobHeaders$ | async">
+          <ng-container *ngFor="let header of jobHeaders$ | async; let i = index">
             <ng-container matColumnDef="{{ header }}">
-              <th mat-header-cell *matHeaderCellDef class="color5">
+              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
                 {{ getHeader(header) }}
               </th>
-              <td mat-cell *matCellDef="let row">
+              <td mat-cell *matCellDef="let row" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
                 {{ getRowValue(header, row) }}
               </td>
             </ng-container>
@@ -413,7 +421,7 @@
             *ngFor="let header of jobMetaHeaders$ | async; let i = index"
           >
             <ng-container matColumnDef="{{ header }}">
-              <th mat-header-cell *matHeaderCellDef class="color5">
+              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
                 {{ getMetaHeader(header) }}
               </th>
             </ng-container>
@@ -432,23 +440,9 @@
             *matRowDef="let row; columns: displayedColumns$ | async"
           ></tr>
         </table>
-        <!-- <mat-paginator
-          *ngIf="paginator$ | async as paginator"
-          (page)="handlePageEvent($event)"
-          [length]="totalCount"
-          [pageSize]="paginator.limit"
-          [pageSizeOptions]="[50, 100, 200]"
-        ></mat-paginator> -->
-        
       </ng-container>
-      <!-- <div class="search-config-wrapper">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Enter page number" [(ngModel)]="pageNumber">
-        </mat-form-field>
-        <button mat-stroked-button color="primary" (click)="goToPage()">Go to Page</button>
-      </div> -->
     </div>
-    </mat-drawer-content>
+  </mat-drawer-content>
 </mat-drawer-container>
 
 <button

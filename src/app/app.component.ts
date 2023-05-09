@@ -29,6 +29,7 @@ export class AppComponent {
   protected metaDisplayedColumns = [
     'nMeta',
     'relojMeta',
+    'trabajoActualMeta',
     'eventoMeta',
     'rndProxLlegadaMeta',
     'tiempoEntreLlegadasMeta',
@@ -54,6 +55,7 @@ export class AppComponent {
   protected displayedColumns = [
     'n',
     'reloj',
+    'trabajoActual',
     'evento',
     'rndProxLlegada',
     'tiempoEntreLlegadas',
@@ -117,7 +119,7 @@ export class AppComponent {
     this.paginator$,
     this.reload$,
   ]).pipe(
-    //skip(1),
+    skip(1),
     switchMap(([paginator]) =>
       this.rowService.getAll(paginator.limit, paginator.skip)
     ),
