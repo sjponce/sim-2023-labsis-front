@@ -213,6 +213,8 @@ export class AppComponent {
       return 'Inicio atencion';
     } else if (header.includes('FinAtencion')) {
       return 'Fin atencion';
+    } else {
+      return 'Undefined';
     }
   }
 
