@@ -29,81 +29,70 @@ export class AppComponent {
   protected metaDisplayedColumns = [
     'nMeta',
     'relojMeta',
-    'trabajoActualMeta',
     'eventoMeta',
     'rndProxLlegadaMeta',
     'tiempoEntreLlegadasMeta',
     'proxLlegadaMeta',
-    'rndTipoTrabajoMeta',
-    'tipoTrabajoMeta',
-    'rndVariacionMeta',
-    'variacionTiempoTrabajoMeta',
-    'colaMeta',
-    'estadoT1Meta',
-    'inicioTrabajoT1Meta',
-    'tiempoTrabajoT1Meta',
-    'finTrabajoT1Meta',
-    'estadoT2Meta',
-    'inicioTrabajoT2Meta',
-    'tiempoTrabajoT2Meta',
-    'finTrabajoT2Meta',
-    'promedioPermanenciaEquiposMeta',
-    'porcentajeEquiposDerivadosMeta',
-    'porcentajeDesocupacionT1Meta',
-    'porcentajeDesocupacionT1Meta',
+    'rndTipoCola1Meta',
+    'tipoCola1Meta',
+    'rndTipoCola2Meta',
+    'tipoCola2Meta',
+    'rndTipoCola3Meta',
+    'tipoCola3Meta',
+    'colaGratuitaMeta',
+    'estadoEGMeta',
+    'inicioAtencionEGMeta',
+    'tiempoAtencionEGMeta',
+    'finAtencionEGMeta',
+    'colaPagaMeta',
+    'estadoEPMeta',
+    'inicioAtencionEPMeta',
+    'tiempoAtencionEPMeta',
+    'finAtencionEPMeta',
+    'contadorTiempoOciosoPagaMeta',
   ];
   protected displayedColumns = [
     'n',
     'reloj',
-    'trabajoActual',
     'evento',
     'rndProxLlegada',
     'tiempoEntreLlegadas',
     'proxLlegada',
-    'rndTipoTrabajo',
-    'tipoTrabajo',
-    'rndVariacion',
-    'variacionTiempoTrabajo',
-    'cola',
-    'estadoT1',
-    'inicioTrabajoT1',
-    'tiempoTrabajoT1',
-    'finTrabajoT1',
-    'estadoT2',
-    'inicioTrabajoT2',
-    'tiempoTrabajoT2',
-    'finTrabajoT2',
-    'promedioPermanenciaEquipos',
-    'porcentajeEquiposDerivados',
-    'porcentajeDesocupacionT1',
-    'porcentajeDesocupacionT2',
+    'rndTipoCola1',
+    'tipoCola1',
+    'rndTipoCola2',
+    'tipoCola2',
+    'rndTipoCola3',
+    'tipoCola3',
+    'colaGratuita',
+    'estadoEG',
+    'inicioAtencionEG',
+    'tiempoAtencionEG',
+    'finAtencionEG',
+    'colaPaga',
+    'estadoEP',
+    'inicioAtencionEP',
+    'tiempoAtencionEP',
+    'finAtencionEP',
+    'contadorTiempoOciosoPaga',
   ];
 
   protected configForm = this.fb.group({
-    tiempoCierre: [
-      1440,
-      [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')],
+    probPasajeGratuito: [
+      0.65,
+      [Validators.required, Validators.min(0), Validators.max(1)],
     ],
-    cotaInfLlegada: [30, [Validators.required, Validators.min(0)]],
-    cotaSupLlegada: [90, [Validators.required, Validators.min(0)]],
-    probA: [0.3, [Validators.required, Validators.min(0), Validators.max(1)]],
-    probB: [0.3, [Validators.required, Validators.min(0), Validators.max(1)]],
-    probC: [0.15, [Validators.required, Validators.min(0), Validators.max(1)]],
-    probD: [0.1, [Validators.required, Validators.min(0), Validators.max(1)]],
-    probE: [0.15, [Validators.required, Validators.min(0), Validators.max(1)]],
-    tiempoTrabajoA: [150, [Validators.required, Validators.min(0)]],
-    tiempoTrabajoB: [60, [Validators.required, Validators.min(0)]],
-    tiempoTrabajoC: [180, [Validators.required, Validators.min(0)]],
-    tiempoTrabajoD: [60, [Validators.required, Validators.min(0)]],
-    tiempoTrabajoE: [30, [Validators.required, Validators.min(0)]],
-    cotaInfVariacionTrabajo: [-5, [Validators.required]],
-    cotaSupVariacionTrabajo: [5, [Validators.required]],
-    tiempoTrabajoInicialC: [25, [Validators.required, Validators.min(0)]],
-    tiempoTrabajoFinalC: [10, [Validators.required, Validators.min(0)]],
-    tamanoCola: [
-      3,
-      [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')],
-    ],
+    segundosPorLlegada: [60, [Validators.required, Validators.min(0)]],
+    tiempoDemoraVenta: [60, [Validators.required, Validators.min(0)]],
+    tiempoFinSimulacion: [480, [Validators.required, Validators.min(0)]],
+    colaPagaInicial: [0, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
+    colaGratuitaInicial: [2, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
+    largoColaAuxiliar: [4, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
+    finTrabajoEmpleadaGratuitaInicial: [45, [Validators.required, Validators.min(0)]],
+    finTrabajoEmpleadaPagaInicial: [0, [Validators.required, Validators.min(0)]],
+    proximaLlegadaInicial: [30, [Validators.required, Validators.min(0)]],
+    duracionAuxiliarGratuita: [120, [Validators.required, Validators.min(0)]],
+    reduccionTiempoAuxiliar: [0.4, [Validators.required, Validators.min(0), Validators.max(1)]],
   });
 
   protected pageNumber = 0;
@@ -120,7 +109,7 @@ export class AppComponent {
     this.reload$,
   ]).pipe(
     skip(1),
-    switchMap(([paginator]) =>
+    switchMap(([paginator]: any[]) =>
       this.rowService.getAll(paginator.limit, paginator.skip)
     ),
     shareReplay({ bufferSize: 1, refCount: true }),
@@ -128,15 +117,15 @@ export class AppComponent {
   );
 
   protected readonly bounds$ = this.rows$.pipe(
-    map((rows) => {
+    map((rows: any) => {
       let min = 0;
       let max = 0;
       
       rows.forEach((row: any) => {
-        if (row.trabajos) {
-          Object.keys(row.trabajos).forEach((trabajo: any) => {
+        if (row.personas) {
+          Object.keys(row.personas).forEach((trabajo: any) => {
             max =
-            row.trabajos[trabajo].id >= max ? row.trabajos[trabajo].id : max;
+            row.personas[trabajo].id >= max ? row.personas[trabajo].id : max;
           });
         }
       });
@@ -147,16 +136,13 @@ export class AppComponent {
   );
 
   protected readonly jobHeaders$ = this.bounds$.pipe(
-    map(([min, max]) => {
+    map(([min, max]: any) => {
       const res: string[] = [];
       for (let i = min; i <= max; i++) {
         res.push(`T${i}Estado`);
         res.push(`T${i}Llegada`);
-        res.push(`T${i}InicioTrabajo`);
-        res.push(`T${i}InicioTrabajoSolitario`);
-        res.push(`T${i}FinTrabajoSolitario`);
-        res.push(`T${i}InicioTrabajoFinal`);
-        res.push(`T${i}FinTrabajo`);
+        res.push(`T${i}InicioAtencion`);
+        res.push(`T${i}FinAtencion`);
       }
       return res;
     }),
@@ -164,16 +150,13 @@ export class AppComponent {
   );
 
   protected readonly jobMetaHeaders$ = this.bounds$.pipe(
-    map(([min, max]) => {
+    map(([min, max]: any) => {
       const res: string[] = [];
       for (let i = min; i <= max; i++) {
         res.push(`T${i}EstadoMeta`);
         res.push(`T${i}LlegadaMeta`);
-        res.push(`T${i}InicioTrabajoMeta`);
-        res.push(`T${i}InicioTrabajoSolitarioMeta`);
-        res.push(`T${i}FinTrabajoSolitarioMeta`);
-        res.push(`T${i}InicioTrabajoFinalMeta`);
-        res.push(`T${i}FinTrabajoMeta`);
+        res.push(`T${i}InicioAtencionMeta`);
+        res.push(`T${i}FinAtencionMeta`);
       }
       return res;
     }),
@@ -181,11 +164,11 @@ export class AppComponent {
   );
 
   protected readonly displayedColumns$ = this.jobHeaders$.pipe(
-    map((headers) => [...this.displayedColumns, ...headers])
+    map((headers: any) => [...this.displayedColumns, ...headers])
   );
 
   protected readonly metaDisplayedColumns$ = this.jobMetaHeaders$.pipe(
-    map((headers) => [...this.metaDisplayedColumns, ...headers])
+    map((headers: any) => [...this.metaDisplayedColumns, ...headers])
   );
 
   public generate() {
@@ -226,22 +209,16 @@ export class AppComponent {
       return 'Estado';
     } else if (header.includes('Llegada')) {
       return 'Llegada';
-    } else if (header.includes('InicioTrabajoSolitario')) {
-      return 'Inicio trabajo solitario';
-    } else if (header.includes('FinTrabajoSolitario')) {
-      return 'Fin trabajo solitario';
-    } else if (header.includes('InicioTrabajoFinal')) {
-      return 'Inicio trabajo Final';
-    } else if (header.includes('InicioTrabajo')) {
-      return 'Inicio trabajo';
-    } else {
-      return 'Fin trabajo';
+    } else if (header.includes('InicioAtencion')) {
+      return 'Inicio atencion';
+    } else if (header.includes('FinAtencion')) {
+      return 'Fin atencion';
     }
   }
 
   public getMetaHeader(header: string) {
     if (header.includes('EstadoMeta')) {
-      return `TRABAJO ${header.match(/\d+/)?.shift()}`;
+      return `PERSONA ${header.match(/\d+/)?.shift()}`;
     } else {
       return '';
     }
@@ -249,22 +226,16 @@ export class AppComponent {
 
   public getRowValue(header: string, row: any) {
     let index = `T${header.match(/\d+/)?.shift()}`;
-    if (!row?.trabajos || !row.trabajos[index]) return '';
+    if (!row?.personas || !row.personas[index]) return '';
 
     if (header.includes('Estado')) {
-      return row.trabajos[index].estado;
+      return row.personas[index].estado;
     } else if (header.includes('Llegada')) {
-      return row.trabajos[index].llegada?.toFixed(4);
-    } else if (header.includes('InicioTrabajoSolitario')) {
-      return row.trabajos[index].tiempoFinTrabajoInicialC?.toFixed(4);
-    } else if (header.includes('FinTrabajoSolitario')) {
-      return row.trabajos[index].tiempoFinTrabajoSolitarioC?.toFixed(4);
-    } else if (header.includes('InicioTrabajoFinal')) {
-      return row.trabajos[index].tiempoInicioTrabajoFinalC?.toFixed(4);
-    } else if (header.includes('InicioTrabajo')) {
-      return row.trabajos[index].inicioTrabajo?.toFixed(4);
-    } else {
-      return row.trabajos[index].finTrabajo?.toFixed(4);
+      return row.personas[index].llegada?.toFixed(4);
+    } else if (header.includes('InicioAtencion')) {
+      return row.personas[index].tiempoFinTrabajoInicialC?.toFixed(4);
+    } else if (header.includes('FinAtencion')) {
+      return row.personas[index].tiempoFinTrabajoSolitarioC?.toFixed(4);
     }
   }
 }

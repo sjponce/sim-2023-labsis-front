@@ -5,88 +5,48 @@
       <form [formGroup]="configForm">
         <h2>Config</h2>
         <mat-form-field appearance="fill">
-          <mat-label>Tiempo cierre</mat-label>
-          <input type="number" matInput formControlName="tiempoCierre" />
+          <mat-label>Tiempo Fin Simulacion</mat-label>
+          <input type="number" matInput formControlName="tiempoFinSimulacion" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Cota inferior llegada</mat-label>
-          <input type="number" matInput formControlName="cotaInfLlegada" />
+          <mat-label>Prob Pasaje Gratuito</mat-label>
+          <input type="number" matInput formControlName="probPasajeGratuito" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Cota superior llegada</mat-label>
-          <input type="number" matInput formControlName="cotaSupLlegada" />
+          <mat-label>Segundos Por Llegada</mat-label>
+          <input type="number" matInput formControlName="segundosPorLlegada" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad A</mat-label>
-          <input type="number" matInput formControlName="probA" />
+          <mat-label>Cola Paga Inicial</mat-label>
+          <input type="number" matInput formControlName="colaPagaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad B</mat-label>
-          <input type="number" matInput formControlName="probB" />
+          <mat-label>Cola Gratuita Inicial</mat-label>
+          <input type="number" matInput formControlName="colaGratuitaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad C</mat-label>
-          <input type="number" matInput formControlName="probC" />
+          <mat-label>Limite Cola Auxiliar</mat-label>
+          <input type="number" matInput formControlName="largoColaAuxiliar" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad D</mat-label>
-          <input type="number" matInput formControlName="probD" />
+          <mat-label>Fin Trabajo Empleada Gratuita Inicial</mat-label>
+          <input type="number" matInput formControlName="finTrabajoEmpleadaGratuitaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Probabilidad E</mat-label>
-          <input type="number" matInput formControlName="probE" />
+          <mat-label>Fin Trabajo Empleada Paga Inicial</mat-label>
+          <input type="number" matInput formControlName="finTrabajoEmpleadaPagaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Tiempo de trabajo A</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoA" />
+          <mat-label>Proxima Llegada Inicial</mat-label>
+          <input type="number" matInput formControlName="proximaLlegadaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Tiempo de trabajo B</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoB" />
+          <mat-label>Duracion Auxiliar Gratuita</mat-label>
+          <input type="number" matInput formControlName="duracionAuxiliarGratuita" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Tiempo de trabajo C</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoC" />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Tiempo de trabajo D</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoD" />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Tiempo de trabajo E</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoE" />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Cota inferior variacion trabajo</mat-label>
-          <input
-            type="number"
-            matInput
-            formControlName="cotaInfVariacionTrabajo"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Cota superior variacion trabajo</mat-label>
-          <input
-            type="number"
-            matInput
-            formControlName="cotaSupVariacionTrabajo"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Tiempo trabajo inicial C</mat-label>
-          <input
-            type="number"
-            matInput
-            formControlName="tiempoTrabajoInicialC"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Tiempo trabajo final C</mat-label>
-          <input type="number" matInput formControlName="tiempoTrabajoFinalC" />
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Tamano maximo de cola</mat-label>
-          <input type="number" matInput formControlName="tamanoCola" />
+          <mat-label>Reduccion Tiempo Auxiliar</mat-label>
+          <input type="number" matInput formControlName="reduccionTiempoAuxiliar" />
         </mat-form-field>
       </form>
       <button
@@ -115,6 +75,7 @@
       <ng-container *ngIf="rows$ | async as rows">
         <table mat-table [dataSource]="rows" class="example-table">
           <!-- META HEADER -->
+
           <ng-container matColumnDef="nMeta" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
@@ -124,10 +85,6 @@
           </ng-container>
 
           <ng-container matColumnDef="eventoMeta" [sticky]="true">
-            <th mat-header-cell *matHeaderCellDef class="color0"></th>
-          </ng-container>
-
-          <ng-container matColumnDef="trabajoActualMeta" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
 
@@ -143,76 +100,80 @@
             <th mat-header-cell *matHeaderCellDef class="color1"></th>
           </ng-container>
 
-          <ng-container matColumnDef="rndTipoTrabajoMeta">
+          <ng-container matColumnDef="rndTipoCola1Meta">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              TIPO TRABAJO
+              TIPO COLA 1
             </th>
           </ng-container>
 
-          <ng-container matColumnDef="tipoTrabajoMeta">
+          <ng-container matColumnDef="tipoCola1Meta">
             <th mat-header-cell *matHeaderCellDef class="color2"></th>
           </ng-container>
 
-          <ng-container matColumnDef="rndVariacionMeta">
+          <ng-container matColumnDef="rndTipoCola2Meta">
+            <th mat-header-cell *matHeaderCellDef class="color2">
+              TIPO COLA 2
+            </th>
+          </ng-container>
+
+          <ng-container matColumnDef="tipoCola2Meta">
             <th mat-header-cell *matHeaderCellDef class="color2"></th>
           </ng-container>
 
-          <ng-container matColumnDef="variacionTiempoTrabajoMeta">
+          <ng-container matColumnDef="rndTipoCola3Meta">
+            <th mat-header-cell *matHeaderCellDef class="color2">
+              TIPO COLA 3
+            </th>
+          </ng-container>
+
+          <ng-container matColumnDef="tipoCola3Meta">
             <th mat-header-cell *matHeaderCellDef class="color2"></th>
           </ng-container>
 
-          <ng-container matColumnDef="colaMeta">
+          <ng-container matColumnDef="colaGratuitaMeta">
             <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
 
-          <ng-container matColumnDef="estadoT1Meta">
-            <th mat-header-cell *matHeaderCellDef class="color3">TECNICO 1</th>
+          <ng-container matColumnDef="estadoEGMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3">EMPLEADA GRATUITA</th>
           </ng-container>
 
-          <ng-container matColumnDef="inicioTrabajoT1Meta">
+          <ng-container matColumnDef="inicioAtencionEGMeta">
             <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
-          <ng-container matColumnDef="tiempoTrabajoT1Meta">
+          <ng-container matColumnDef="tiempoTrabajoEGMeta">
             <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
-          <ng-container matColumnDef="finTrabajoT1Meta">
+          <ng-container matColumnDef="finTrabajoEGMeta">
             <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
-          <ng-container matColumnDef="estadoT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color4">TECNICO 2</th>
+          <ng-container matColumnDef="colaPagaMeta">
+            <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
 
-          <ng-container matColumnDef="inicioTrabajoT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color4"></th>
+          <ng-container matColumnDef="estadoEPMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3">EMPLEADA PAGA</th>
           </ng-container>
 
-          <ng-container matColumnDef="tiempoTrabajoT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color4"></th>
+          <ng-container matColumnDef="inicioAtencionEPMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
-          <ng-container matColumnDef="finTrabajoT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color4"></th>
+          <ng-container matColumnDef="tiempoTrabajoEPMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
-          <ng-container matColumnDef="promedioPermanenciaEquiposMeta">
+          <ng-container matColumnDef="finTrabajoEPMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3"></th>
+          </ng-container>
+
+          <ng-container matColumnDef="contadorTiempoOciosoPagaMeta">
             <th mat-header-cell *matHeaderCellDef class="color6">
               ESTADISTICAS
             </th>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeEquiposDerivadosMeta">
-            <th mat-header-cell *matHeaderCellDef class="color6"></th>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeDesocupacionT1Meta">
-            <th mat-header-cell *matHeaderCellDef class="color6"></th>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeDesocupacionT2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color6"></th>
           </ng-container>
 
           <!-- HEADER - CONTENT -->
@@ -265,144 +226,138 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="rndTipoTrabajo">
+          <ng-container matColumnDef="rndTipoCola1">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              Rnd tipo trabajo
+              Rnd tipo cola 1
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.rndTipoTrabajo?.toFixed(4) }}
+              {{ row.rndTipoCola1?.toFixed(4) }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="tipoTrabajo">
+          <ng-container matColumnDef="tipoCola1">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              tipo trabajo
+              tipo trabajo 1
             </th>
-            <td mat-cell *matCellDef="let row">{{ row.tipoTrabajo }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.tipoCola1 }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="rndVariacion">
+          <ng-container matColumnDef="rndTipoCola2">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              Rnd variacion tiempo trabajo
+              Rnd tipo cola 2
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.rndVariacion?.toFixed(4) }}
+              {{ row.rndTipoCola2?.toFixed(4) }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="variacionTiempoTrabajo">
+          <ng-container matColumnDef="tipoCola2">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              Variacion tiempo trabajo
+              tipo trabajo 2
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.tipoCola2 }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="rndTipoCola3">
+            <th mat-header-cell *matHeaderCellDef class="color2">
+              Rnd tipo cola 3
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.variacionTiempoTrabajo?.toFixed(4) ?? "" }}
+              {{ row.rndTipoCola3?.toFixed(4) }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="cola">
-            <th mat-header-cell *matHeaderCellDef class="color0">Cola</th>
+          <ng-container matColumnDef="tipoCola3">
+            <th mat-header-cell *matHeaderCellDef class="color2">
+              tipo trabajo 3
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.tipoCola3 }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="colaGratuita">
+            <th mat-header-cell *matHeaderCellDef class="color0">Cola Gratuita</th>
             <td mat-cell *matCellDef="let row">
-              {{ row.colaLlegada?.length }}
+              {{ row.colaGratuita?.length }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="estadoT1">
+          <ng-container matColumnDef="estadoEG">
             <th mat-header-cell *matHeaderCellDef class="color3">Estado</th>
-            <td mat-cell *matCellDef="let row">{{ row.tecnico1?.estado }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.empleadaGratuita?.estado }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="inicioTrabajoT1">
+          <ng-container matColumnDef="inicioAtencionEG">
             <th mat-header-cell *matHeaderCellDef class="color3">
-              Inicio trabajo
+              Inicio Atencion
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.inicioTrabajo?.toFixed(4) ?? "" }}
+              {{ row.empleadaGratuita?.inicioAtencion?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="tiempoTrabajoT1">
+          <ng-container matColumnDef="tiempoAtencionEG">
             <th mat-header-cell *matHeaderCellDef class="color3">
-              Tiempo trabajo
+              Tiempo Atencion
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.tiempoTrabajo?.toFixed(4) ?? "" }}
+              {{ row.empleadaGratuita?.tiempoAtencion?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="finTrabajoT1">
+          <ng-container matColumnDef="finAtencionEG">
             <th mat-header-cell *matHeaderCellDef class="color3">
-              Fin trabajo
+              Fin Atencion
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico1?.finTrabajo?.toFixed(4) ?? "" }}
+              {{ row.empleadaGratuita?.finAtencion?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="estadoT2">
-            <th mat-header-cell *matHeaderCellDef class="color4">Estado</th>
-            <td mat-cell *matCellDef="let row">{{ row.tecnico2?.estado }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="inicioTrabajoT2">
-            <th mat-header-cell *matHeaderCellDef class="color4">
-              Inicio trabajo
-            </th>
+          <ng-container matColumnDef="colaPaga">
+            <th mat-header-cell *matHeaderCellDef class="color0">Cola Paga</th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.inicioTrabajo?.toFixed(4) ?? "" }}
+              {{ row.colaPaga?.length }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="tiempoTrabajoT2">
-            <th mat-header-cell *matHeaderCellDef class="color4">
-              Tiempo trabajo
+          <ng-container matColumnDef="estadoEP">
+            <th mat-header-cell *matHeaderCellDef class="color3">Estado</th>
+            <td mat-cell *matCellDef="let row">{{ row.empleadaPaga?.estado }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="inicioAtencionEP">
+            <th mat-header-cell *matHeaderCellDef class="color3">
+              Inicio Atencion
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.tiempoTrabajo?.toFixed(4) ?? "" }}
+              {{ row.empleadaPaga?.inicioAtencion?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="finTrabajoT2">
-            <th mat-header-cell *matHeaderCellDef class="color4">
-              Fin trabajo
+          <ng-container matColumnDef="tiempoAtencionEP">
+            <th mat-header-cell *matHeaderCellDef class="color3">
+              Tiempo Atencion
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.tecnico2?.finTrabajo?.toFixed(4) ?? "" }}
+              {{ row.empleadaPaga?.tiempoAtencion?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="promedioPermanenciaEquipos">
+          <ng-container matColumnDef="finAtencionEP">
+            <th mat-header-cell *matHeaderCellDef class="color3">
+              Fin Atencion
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.empleadaPaga?.finAtencion?.toFixed(4) ?? "" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="contadorTiempoOciosoPaga">
             <th mat-header-cell *matHeaderCellDef class="color6">
-              Promedio permanencia de equipos
+              Tiempo Ocioso Empleada Paga
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.promedioPermanenciaEquipos?.toFixed(4) ?? "" }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeEquiposDerivados">
-            <th mat-header-cell *matHeaderCellDef class="color6">
-              Porcentaje equipos derivados
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeEquiposDerivados?.toFixed(4) ?? "" }}%
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeDesocupacionT1">
-            <th mat-header-cell *matHeaderCellDef class="color6">
-              Porcentaje desocupacion T1
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeDesocupacionT1?.toFixed(4) ?? "" }}%
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="porcentajeDesocupacionT2">
-            <th mat-header-cell *matHeaderCellDef class="color6">
-              Porcentaje desocupacion T2
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.porcentajeDesocupacionT2?.toFixed(4) ?? "" }}%
+              {{ row.empleadaPaga.tiempoOcioso?.toFixed(4) ?? "" }}
             </td>
           </ng-container>
 
