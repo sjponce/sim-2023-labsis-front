@@ -138,6 +138,10 @@
             <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
+          <ng-container matColumnDef="personaActualEGMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3"></th>
+          </ng-container>
+
           <ng-container matColumnDef="colaPagaMeta">
             <th mat-header-cell *matHeaderCellDef class="color0"></th>
           </ng-container>
@@ -155,6 +159,10 @@
           </ng-container>
 
           <ng-container matColumnDef="finAtencionEPMeta">
+            <th mat-header-cell *matHeaderCellDef class="color3"></th>
+          </ng-container>
+
+          <ng-container matColumnDef="personaActualEPMeta">
             <th mat-header-cell *matHeaderCellDef class="color3"></th>
           </ng-container>
 
@@ -262,6 +270,15 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="personaActualEG">
+            <th mat-header-cell *matHeaderCellDef class="color3">
+              Persona actual
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.empleadaGratuita?.persona?.id ?? "" }}
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="colaPaga">
             <th mat-header-cell *matHeaderCellDef class="color0">Cola Paga</th>
             <td mat-cell *matCellDef="let row">
@@ -298,6 +315,15 @@
             </th>
             <td mat-cell *matCellDef="let row">
               {{ row.empleadaPaga?.finAtencion?.toFixed(4) ?? "" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="personaActualEP">
+            <th mat-header-cell *matHeaderCellDef class="color3">
+              Persona actual
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.empleadaPaga?.persona?.id ?? "" }}
             </td>
           </ng-container>
 

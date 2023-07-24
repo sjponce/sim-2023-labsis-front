@@ -8,7 +8,6 @@ import {
   skip,
   startWith,
   switchMap,
-  tap,
 } from 'rxjs';
 import { RowService } from './row.service';
 
@@ -40,11 +39,13 @@ export class AppComponent {
     'inicioAtencionEGMeta',
     'tiempoAtencionEGMeta',
     'finAtencionEGMeta',
+    'personaActualEGMeta',
     'colaPagaMeta',
     'estadoEPMeta',
     'inicioAtencionEPMeta',
     'tiempoAtencionEPMeta',
     'finAtencionEPMeta',
+    'personaActualEPMeta',
     'contadorTiempoOciosoPagaMeta',
   ];
   protected displayedColumns = [
@@ -61,11 +62,13 @@ export class AppComponent {
     'inicioAtencionEG',
     'tiempoAtencionEG',
     'finAtencionEG',
+    'personaActualEG',
     'colaPaga',
     'estadoEP',
     'inicioAtencionEP',
     'tiempoAtencionEP',
     'finAtencionEP',
+    'personaActualEP',
     'contadorTiempoOciosoPaga',
   ];
 
@@ -76,7 +79,7 @@ export class AppComponent {
     ],
     minutosPorLlegada: [3, [Validators.required, Validators.min(0)]],
     tiempoDemoraVenta: [60, [Validators.required, Validators.min(0)]],
-    tiempoFinSimulacion: [400, [Validators.required, Validators.min(0)]],
+    tiempoFinSimulacion: [28800, [Validators.required, Validators.min(0)]],
     colaPagaInicial: [0, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
     colaGratuitaInicial: [2, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
     largoColaAuxiliar: [4, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
