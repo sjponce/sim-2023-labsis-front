@@ -13,8 +13,8 @@
           <input type="number" matInput formControlName="probPasajeGratuito" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Segundos Por Llegada</mat-label>
-          <input type="number" matInput formControlName="segundosPorLlegada" />
+          <mat-label>Personas Por minuto</mat-label>
+          <input type="number" matInput formControlName="minutosPorLlegada" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Cola Paga Inicial</mat-label>
@@ -29,12 +29,12 @@
           <input type="number" matInput formControlName="largoColaAuxiliar" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Fin Trabajo Empleada Gratuita Inicial</mat-label>
-          <input type="number" matInput formControlName="finTrabajoEmpleadaGratuitaInicial" />
+          <mat-label>Fin Atencion Empleada Gratuita Inicial</mat-label>
+          <input type="number" matInput formControlName="finAtencionEmpleadaGratuitaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Fin Trabajo Empleada Paga Inicial</mat-label>
-          <input type="number" matInput formControlName="finTrabajoEmpleadaPagaInicial" />
+          <mat-label>Fin Atencion Empleada Paga Inicial</mat-label>
+          <input type="number" matInput formControlName="finAtencionEmpleadaPagaInicial" />
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Proxima Llegada Inicial</mat-label>
@@ -47,6 +47,14 @@
         <mat-form-field appearance="fill">
           <mat-label>Reduccion Tiempo Auxiliar</mat-label>
           <input type="number" matInput formControlName="reduccionTiempoAuxiliar" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Desde</mat-label>
+          <input type="number" matInput formControlName="desde" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Hasta</mat-label>
+          <input type="number" matInput formControlName="hasta" />
         </mat-form-field>
       </form>
       <button
@@ -100,33 +108,13 @@
             <th mat-header-cell *matHeaderCellDef class="color1"></th>
           </ng-container>
 
-          <ng-container matColumnDef="rndTipoCola1Meta">
+          <ng-container matColumnDef="rndTipoColaMeta">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              TIPO COLA 1
+              TIPO COLA
             </th>
           </ng-container>
 
-          <ng-container matColumnDef="tipoCola1Meta">
-            <th mat-header-cell *matHeaderCellDef class="color2"></th>
-          </ng-container>
-
-          <ng-container matColumnDef="rndTipoCola2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              TIPO COLA 2
-            </th>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoCola2Meta">
-            <th mat-header-cell *matHeaderCellDef class="color2"></th>
-          </ng-container>
-
-          <ng-container matColumnDef="rndTipoCola3Meta">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              TIPO COLA 3
-            </th>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoCola3Meta">
+          <ng-container matColumnDef="tipoColaMeta">
             <th mat-header-cell *matHeaderCellDef class="color2"></th>
           </ng-container>
 
@@ -187,13 +175,6 @@
             <td mat-cell *matCellDef="let row">{{ row.reloj?.toFixed(4) }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="trabajoActual" [sticky]="true">
-            <th mat-header-cell *matHeaderCellDef class="color0">
-              Trabajo actual
-            </th>
-            <td mat-cell *matCellDef="let row">{{ row.trabajoActual }}</td>
-          </ng-container>
-
           <ng-container matColumnDef="evento" [sticky]="true">
             <th mat-header-cell *matHeaderCellDef class="color0">Evento</th>
             <td mat-cell *matCellDef="let row">{{ row.evento }}</td>
@@ -226,52 +207,20 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="rndTipoCola1">
+          <ng-container matColumnDef="rndTipoCola">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              Rnd tipo cola 1
+              Rnd tipo cola
             </th>
             <td mat-cell *matCellDef="let row">
-              {{ row.rndTipoCola1?.toFixed(4) }}
+              {{ row.rndTipoCola?.toFixed(4) }}
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="tipoCola1">
+          <ng-container matColumnDef="tipoCola">
             <th mat-header-cell *matHeaderCellDef class="color2">
-              tipo trabajo 1
+              Tipo cola
             </th>
-            <td mat-cell *matCellDef="let row">{{ row.tipoCola1 }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="rndTipoCola2">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              Rnd tipo cola 2
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.rndTipoCola2?.toFixed(4) }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoCola2">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              tipo trabajo 2
-            </th>
-            <td mat-cell *matCellDef="let row">{{ row.tipoCola2 }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="rndTipoCola3">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              Rnd tipo cola 3
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.rndTipoCola3?.toFixed(4) }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoCola3">
-            <th mat-header-cell *matHeaderCellDef class="color2">
-              tipo trabajo 3
-            </th>
-            <td mat-cell *matCellDef="let row">{{ row.tipoCola3 }}</td>
+            <td mat-cell *matCellDef="let row">{{ row.tipoCola }}</td>
           </ng-container>
 
           <ng-container matColumnDef="colaGratuita">
@@ -363,10 +312,10 @@
 
           <ng-container *ngFor="let header of jobHeaders$ | async; let i = index">
             <ng-container matColumnDef="{{ header }}">
-              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
+              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 4 === 0 ? 'border-left-strong' : ''">
                 {{ getHeader(header) }}
               </th>
-              <td mat-cell *matCellDef="let row" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
+              <td mat-cell *matCellDef="let row" [ngClass]="i % 4 === 0 ? 'border-left-strong' : ''">
                 {{ getRowValue(header, row) }}
               </td>
             </ng-container>
@@ -376,7 +325,7 @@
             *ngFor="let header of jobMetaHeaders$ | async; let i = index"
           >
             <ng-container matColumnDef="{{ header }}">
-              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 7 === 0 ? 'border-left-strong' : ''">
+              <th mat-header-cell *matHeaderCellDef class="color5" [ngClass]="i % 4 === 0 ? 'border-left-strong' : ''">
                 {{ getMetaHeader(header) }}
               </th>
             </ng-container>

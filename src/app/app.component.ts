@@ -33,12 +33,8 @@ export class AppComponent {
     'rndProxLlegadaMeta',
     'tiempoEntreLlegadasMeta',
     'proxLlegadaMeta',
-    'rndTipoCola1Meta',
-    'tipoCola1Meta',
-    'rndTipoCola2Meta',
-    'tipoCola2Meta',
-    'rndTipoCola3Meta',
-    'tipoCola3Meta',
+    'rndTipoColaMeta',
+    'tipoColaMeta',
     'colaGratuitaMeta',
     'estadoEGMeta',
     'inicioAtencionEGMeta',
@@ -58,12 +54,8 @@ export class AppComponent {
     'rndProxLlegada',
     'tiempoEntreLlegadas',
     'proxLlegada',
-    'rndTipoCola1',
-    'tipoCola1',
-    'rndTipoCola2',
-    'tipoCola2',
-    'rndTipoCola3',
-    'tipoCola3',
+    'rndTipoCola',
+    'tipoCola',
     'colaGratuita',
     'estadoEG',
     'inicioAtencionEG',
@@ -82,17 +74,19 @@ export class AppComponent {
       0.65,
       [Validators.required, Validators.min(0), Validators.max(1)],
     ],
-    segundosPorLlegada: [60, [Validators.required, Validators.min(0)]],
+    minutosPorLlegada: [3, [Validators.required, Validators.min(0)]],
     tiempoDemoraVenta: [60, [Validators.required, Validators.min(0)]],
-    tiempoFinSimulacion: [480, [Validators.required, Validators.min(0)]],
+    tiempoFinSimulacion: [400, [Validators.required, Validators.min(0)]],
     colaPagaInicial: [0, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
     colaGratuitaInicial: [2, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
     largoColaAuxiliar: [4, [Validators.min(0), Validators.pattern('^[0-9]*$')]],
-    finTrabajoEmpleadaGratuitaInicial: [45, [Validators.required, Validators.min(0)]],
-    finTrabajoEmpleadaPagaInicial: [0, [Validators.required, Validators.min(0)]],
+    finAtencionEmpleadaGratuitaInicial: [45, [Validators.required, Validators.min(0)]],
+    finAtencionEmpleadaPagaInicial: [0, [Validators.required, Validators.min(0)]],
     proximaLlegadaInicial: [30, [Validators.required, Validators.min(0)]],
     duracionAuxiliarGratuita: [120, [Validators.required, Validators.min(0)]],
     reduccionTiempoAuxiliar: [0.4, [Validators.required, Validators.min(0), Validators.max(1)]],
+    desde: [0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]],
+    hasta: [100, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*$')]],
   });
 
   protected pageNumber = 0;
@@ -100,7 +94,7 @@ export class AppComponent {
   protected stats: any;
 
   protected paginator$ = new BehaviorSubject<Paginator>({
-    limit: 500000,
+    limit: 100,
     skip: 0,
   });
   protected readonly reload$ = new BehaviorSubject<null>(null);
@@ -184,8 +178,8 @@ export class AppComponent {
 
   public populate() {
     this.paginator$.next({
-      limit: 400,
-      skip: 0,
+      limit: (this.configForm.controls.hasta.value ?? 100) - (this.configForm.controls.desde.value ?? 0),
+      skip: this.configForm.controls.desde.value ?? 0,
     });
   }
 
@@ -235,9 +229,9 @@ export class AppComponent {
     } else if (header.includes('Llegada')) {
       return row.personas[index].llegada?.toFixed(4);
     } else if (header.includes('InicioAtencion')) {
-      return row.personas[index].tiempoFinTrabajoInicialC?.toFixed(4);
+      return row.personas[index].inicioAtencion?.toFixed(4);
     } else if (header.includes('FinAtencion')) {
-      return row.personas[index].tiempoFinTrabajoSolitarioC?.toFixed(4);
+      return row.personas[index].finAtencion?.toFixed(4);
     }
   }
 }
